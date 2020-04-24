@@ -3,7 +3,7 @@ syntax = "proto3";
 package vessel;
 
 service VesselService {
-    rpc FindAvaliable(Specification) returns (Response) {}
+    rpc FindAvailable(Specification) returns (Response) {}
 }
 
 message Vessel {
