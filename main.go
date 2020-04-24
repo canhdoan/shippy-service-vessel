@@ -31,7 +31,7 @@ type service struct {
 	repo Repository
 }
 
-func (s *service) FindAvaliable(ctx context.Context, req *pb.Specification, res *pb.Response) error {
+func (s *service) FindAvailable(ctx context.Context, req *pb.Specification, res *pb.Response) error {
 	vessel, err := s.repo.FindAvailable(req)
 	if err != nil {
 		return err
