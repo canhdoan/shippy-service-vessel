@@ -7,11 +7,10 @@ import (
 
 	pb "github.com/canhdoan/shippy-service-vessel/proto/vessel"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/v2"
 )
 
 type Repository interface {
-	FindAvailable(*pb.Specification) (*pb.Vessel, err)
+	FindAvailable(*pb.Specification) (*pb.Vessel, error)
 }
 
 type VesselRepository struct {
@@ -20,17 +19,16 @@ type VesselRepository struct {
 
 func (repo *VesselRepository) FindAvailable(spec *pb.Specification) (*pb.Vessel, error) {
 	for _, vessel := range repo.vessels {
-		if spec.Capacity <= vessel.Capacity
-			&& spec.MaxWeight <= vessel.MaxWeight {
-				return vessel, nil
-			}
+		if spec.Capacity <= vessel.Capacity && spec.MaxWeight <= vessel.MaxWeight {
+			return vessel, nil
+		}
 	}
 
 	return nil, errors.New("No vessel found by that spec")
 }
 
 type service struct {
-	repo repository
+	repo Repository
 }
 
 func (s *service) FindAvaliable(ctx context.Context, req *pb.Specification, res *pb.Response) error {
